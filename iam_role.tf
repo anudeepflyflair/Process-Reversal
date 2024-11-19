@@ -45,7 +45,7 @@ resource "aws_iam_policy" "process_reversal_dynamodb_policy" {
           "logs:PutLogEvents"
         ]
         Resource = "arn:aws:logs:*:*:*"
-      }
+      },
             # Lambda VPC Permissions
       {
         Effect = "Allow"
