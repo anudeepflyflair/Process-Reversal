@@ -15,4 +15,8 @@ resource "aws_lambda_function" "process_reversal" {
       AUDIT_TRAIL_TABLE          = data.aws_dynamodb_table.audit_trail_table.name
     }
   }
+    vpc_config {
+    subnet_ids         = [data.aws_subnet.private_subnet.id]
+    security_group_ids = [data.aws_security_group.private_sg.id]
+  }
 }
