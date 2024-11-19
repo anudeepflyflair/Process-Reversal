@@ -45,13 +45,43 @@ resource "aws_dynamodb_table" "transactions_table" {
   }
  
   attribute {
-    name = "metadata"
-    type = "M"
+    name = "linkedTransactionId"
+    type = "S"
   }
  
   attribute {
-    name = "linkedTransactionId"
+    name = "metadata"
     type = "S"
+  }
+ 
+  attribute {
+    name = "metadata_json"
+    type = "S"
+  }
+ 
+  global_secondary_index {
+    name           = "AmountIndex"
+    hash_key       = "amount"
+    range_key      = "currency"
+    projection_type = "ALL"
+  }
+ 
+  global_secondary_index {
+    name           = "StatusIndex"
+    hash_key       = "status"
+    projection_type = "ALL"
+  }
+ 
+  global_secondary_index {
+    name           = "LinkedTransactionIdIndex"
+    hash_key       = "linkedTransactionId"
+    projection_type = "ALL"
+  }
+ 
+  global_secondary_index {
+    name           = "MetadataIndex"
+    hash_key       = "metadata"
+    projection_type = "ALL"
   }
  
   stream_enabled  = true
@@ -63,7 +93,6 @@ resource "aws_dynamodb_table" "transactions_table" {
 }
 
 
-#audit trail table
 resource "aws_dynamodb_table" "audit_trail_table" {
   name           = "${var.project}-ReversalAuditTable"
   billing_mode   = "PAY_PER_REQUEST"
@@ -121,8 +150,49 @@ resource "aws_dynamodb_table" "audit_trail_table" {
   }
  
   attribute {
+    name = "metadata_json"
+    type = "S"
+  }
+ 
+  attribute {
     name = "actionDetails"
     type = "M"
+  }
+ 
+  attribute {
+    name = "actionDetails_json"
+    type = "S"
+  }
+ 
+  global_secondary_index {
+    name           = "AmountIndex"
+    hash_key       = "amount"
+    range_key      = "currency"
+    projection_type = "KEYS_ONLY"
+  }
+ 
+  global_secondary_index {
+    name           = "StatusIndex"
+    hash_key       = "status"
+    projection_type = "KEYS_ONLY"
+  }
+ 
+  global_secondary_index {
+    name           = "TransactionIdIndex"
+    hash_key       = "transactionId"
+    projection_type = "KEYS_ONLY"
+  }
+ 
+  global_secondary_index {
+    name           = "MetadataIndex"
+    hash_key       = "metadata"
+    projection_type = "KEYS_ONLY"
+  }
+ 
+  global_secondary_index {
+    name           = "ActionDetailsIndex"
+    hash_key       = "actionDetails"
+    projection_type = "KEYS_ONLY"
   }
  
   stream_enabled  = true
