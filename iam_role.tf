@@ -33,8 +33,8 @@ resource "aws_iam_policy" "process_reversal_dynamodb_policy" {
           "dynamodb:Query"
         ]
         Resource = [
-          data.aws_dynamodb_table.transactions_table.arn,
-          data.aws_dynamodb_table.audit_trail_table.arn
+          aws_dynamodb_table.transactions_table.arn,
+          aws_dynamodb_table.audit_trail_table.arn
         ]
       },
       {
