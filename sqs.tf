@@ -1,4 +1,3 @@
-
 resource "aws_sqs_queue" "reversal_queue" {
   name                        = "ReversalProcessingQueue.fifo"
   fifo_queue                  = true

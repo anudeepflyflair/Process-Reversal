@@ -33,8 +33,8 @@ resource "aws_iam_policy" "process_reversal_dynamodb_policy" {
           "dynamodb:Query"
         ]
         Resource = [
-          aws_dynamodb_table.transactions_table.arn,
-          aws_dynamodb_table.audit_trail_table.arn
+          data.aws_dynamodb_table.transactions_table.arn,
+          data.aws_dynamodb_table.audit_trail_table.arn
         ]
       },
       {
@@ -45,19 +45,6 @@ resource "aws_iam_policy" "process_reversal_dynamodb_policy" {
           "logs:PutLogEvents"
         ]
         Resource = "arn:aws:logs:*:*:*"
-      },
-            # Lambda VPC Permissions
-      {
-        Effect = "Allow"
-        Action = [
-          "ec2:CreateNetworkInterface",
-          "ec2:DescribeNetworkInterfaces",
-          "ec2:DeleteNetworkInterface",
-          "ec2:DescribeSubnets",
-          "ec2:DescribeVpcs",
-          "ec2:DescribeSecurityGroups"
-        ]
-        Resource = "*"
       }
     ]
   })

@@ -11,8 +11,8 @@ resource "aws_lambda_function" "process_reversal" {
   # Environment variables for table names
   environment {
     variables = {
-      ORIGINAL_TRANSACTION_TABLE = aws_dynamodb_table.transactions_table.name
-      AUDIT_TRAIL_TABLE          = aws_dynamodb_table.audit_trail_table.name
+      ORIGINAL_TRANSACTION_TABLE = data.aws_dynamodb_table.transactions_table.name
+      AUDIT_TRAIL_TABLE          = data.aws_dynamodb_table.audit_trail_table.name
     }
   }
     vpc_config {
